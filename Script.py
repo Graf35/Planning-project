@@ -39,5 +39,6 @@ def loading_assets(parent, filename):
             parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(str(assets["Номер актива"][str_index])))
             parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(str(assets["Номер родительского актива"][str_index])))
             str_index +=1
+    assets.to_excel("Database/assets.xlsx")
 
 

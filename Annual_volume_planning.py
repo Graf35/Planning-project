@@ -19,7 +19,7 @@ class Annual_volume_planning(QtWidgets.QMainWindow, ui):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.btnClicked1)
         self.pushButton_2.clicked.connect(self.btnClicked2)
-        self.tableWidget.setItem(0, 0, QTableWidgetItem("Text in column 1"))
+        self.pushButton_3.clicked.connect(self.btnClicked3)
 
     def btnClicked1(self):
         # Определяем путь до файла
@@ -34,3 +34,6 @@ class Annual_volume_planning(QtWidgets.QMainWindow, ui):
         self.deman = threading.Thread(target=Script.loading_assets(self, fname))
         # Запускаем новый поток
         self.deman.start()
+
+    def btnClicked3(self):
+        pass
