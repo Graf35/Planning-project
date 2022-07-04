@@ -24,7 +24,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>449</width>
+    <width>1500</width>
     <height>639</height>
    </size>
   </property>
@@ -44,63 +44,92 @@
      <height>603</height>
     </size>
    </property>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1500</width>
-      <height>571</height>
+      <width>1502</width>
+      <height>596</height>
      </rect>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>1500</width>
-      <height>571</height>
-     </size>
-    </property>
-    <property name="gridStyle">
-     <enum>Qt::NoPen</enum>
-    </property>
-    <property name="columnCount">
-     <number>6</number>
-    </property>
-    <column>
-     <property name="text">
-      <string>Организация</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>№ Актива</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Родительский Актив</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Месяц выполнения работ</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>№ ЗВР</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Статус ЗВР</string>
-     </property>
-    </column>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Выгрузить шаблон</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Импорт активов</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>1500</width>
+         <height>571</height>
+        </size>
+       </property>
+       <property name="gridStyle">
+        <enum>Qt::NoPen</enum>
+       </property>
+       <property name="columnCount">
+        <number>7</number>
+       </property>
+       <column>
+        <property name="text">
+         <string>Организация</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>№ Актива</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Родительский Актив</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Месяц выполнения работ</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Операция с активом</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>№ ЗВР</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Статус ЗВР</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
