@@ -35,3 +35,7 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         self.deman1 = threading.Thread(target=self.monthly_volume_planning_window.show())
         # Запускаем новый поток
         self.deman1.start()
+
+    def sourse(self):
+        #Определяем путь до файла
+        fname = QFileDialog.getOpenFileName(self, 'Open file', '/sourse')[0]
