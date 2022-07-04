@@ -92,6 +92,9 @@
        <property name="columnCount">
         <number>7</number>
        </property>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>131</number>
+       </attribute>
        <column>
         <property name="text">
          <string>Организация</string>
