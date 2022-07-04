@@ -8,23 +8,6 @@ import pandas as pd
 import numpy as np
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
 
-
-#Эта функция ожидает и преобразует данные, полученные от пользователя через интерфейс
-def dialog(parent):
-    #Задаём локальную переменную, которая ожидает ввода данных
-    variable = 0
-    #Задаём бесконечный цикл проверки ввода
-    while variable == 0:
-        #Если ввода переменной не произошло то останавливаем поток на 1 сек
-        time.sleep(1)
-        #присваиваем переменной ожидания текущие значение на табло
-        variable = parent.inpat
-    #Выводим пользователю сообщение
-    parent.label_2.setText("Продолжаю расчёт")
-    #Стираем введенное значение из окна
-    parent.inpat=0
-    return (variable)
-
 def loading_assets(parent, filename):
     str_index=0
     assets = pd.read_excel(filename)
@@ -40,5 +23,39 @@ def loading_assets(parent, filename):
             parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(str(assets["Номер родительского актива"][str_index])))
             str_index +=1
     assets.to_excel("Database/assets.xlsx")
+
+def creature_zvr(parent):
+    assets = pd.read_excel('Database/assets.xlsx')
+    assets[["Месяц ремонта", "Операция с активом", "Номер ЗВР", "Статус ЗВР"]] = np.nan
+    for i in range(parent.tableWidget.rowCount()):
+        assets["Месяц ремонта"][i]= parent.tableWidget.item(i, 3).text()
+        assets["Операция с активом"][i] = parent.tableWidget.item(i, 4).text()
+        config=filereader("config.config")
+        zvrnomber=int(config['zvrnomber'])
+        assets["Номер ЗВР"][i]=int(zvrnomber+1)
+        configupdate(int(assets["Номер ЗВР"][i]))
+        parent.tableWidget.setItem(i, 5, QTableWidgetItem(str(int(assets["Номер ЗВР"][i]))))
+        assets["Статус ЗВР"][i] = "Проект"
+        parent.tableWidget.setItem(i, 6, QTableWidgetItem(str(assets["Статус ЗВР"][i])))
+    assets.to_excel("Database/assets.xlsx")
+
+
+def filereader(fail_name):
+    sting=[]
+    file=open(fail_name, 'r')
+    for line in file:
+        sting.append(line.strip().split(";"))
+    file.close()
+    filetext={}
+    for i in range(len(sting)):
+        filetext[sting[i][0]]=(sting[i][1])
+    return (filetext)
+
+def configupdate(zvr):
+    lines = ["zvrnomber;" + str(zvr) + "\n"]
+    with open("config.config", "w") as file:
+        for line in lines:
+            if line != "":
+                file.write(line)
 
 
