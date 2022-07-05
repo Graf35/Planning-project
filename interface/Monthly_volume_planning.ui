@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
-    <height>427</height>
+    <width>1887</width>
+    <height>424</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,72 +38,172 @@
      <height>350</height>
     </size>
    </property>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>20</y>
-      <width>1500</width>
-      <height>350</height>
+      <y>0</y>
+      <width>1884</width>
+      <height>389</height>
      </rect>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>1500</width>
-      <height>350</height>
-     </size>
-    </property>
-    <column>
-     <property name="text">
-      <string>№ЗВР</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Родительский актив</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Номер актива</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Статус ЗВР</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Дата начала работ</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Дата окончания работ</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Заказ выдан</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Заказ принял</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Заказ принял</string>
-     </property>
-    </column>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Январь</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Февраль</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Март</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Апрель</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Май</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Июнь</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Июль</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Август</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Сентябрь</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Октябрь</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ноябрь</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Декабрь</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Выбрать месяц</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Выпустить все ЗВР</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>Выгрузить месячный план</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>1500</width>
+         <height>350</height>
+        </size>
+       </property>
+       <column>
+        <property name="text">
+         <string>№ЗВР</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Родительский актив</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Номер актива</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Статус ЗВР</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Дата начала работ</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Дата окончания работ</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Заказ выдан</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Заказ принял</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Заказ принял</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -111,8 +211,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1500</width>
-     <height>18</height>
+     <width>1887</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
