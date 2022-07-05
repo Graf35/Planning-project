@@ -26,7 +26,10 @@ def loading_assets(parent, filename):
 
 def creature_zvr(parent):
     assets = pd.read_excel('Database/assets.xlsx')
-    assets[["Месяц ремонта", "Операция с активом", "Номер ЗВР", "Статус ЗВР"]] = np.nan
+    assets["Месяц ремонта"] = np.nan
+    assets["Операция с активом"] = np.nan
+    assets["Номер ЗВР"] = np.nan
+    assets["Статус ЗВР"] = np.nan
     for i in range(parent.tableWidget.rowCount()):
         assets["Месяц ремонта"][i]= parent.tableWidget.item(i, 3).text()
         assets["Операция с активом"][i] = parent.tableWidget.item(i, 4).text()
