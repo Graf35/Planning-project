@@ -42,6 +42,9 @@ def creature_zvr(parent):
         parent.tableWidget.setItem(i, 6, QTableWidgetItem(str(assets["Статус ЗВР"][i])))
     assets.to_excel("Database/assets.xlsx")
 
+def monthly_plan(parent):
+    month=parent.comboBox.currentText()
+
 
 def filereader(fail_name):
     sting=[]

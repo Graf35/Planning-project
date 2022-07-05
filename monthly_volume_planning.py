@@ -3,6 +3,11 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 from PyQt5 import  uic
 from PyQt5.QtWidgets import QFileDialog
+import Script
+import shutil
+#Этот модуль позволяет использовать многопоточность
+import threading
+
 
 
 #Определяем имя и путь до файлас формой окна.
@@ -14,8 +19,19 @@ class Monthly_volume_planning(QtWidgets.QMainWindow, ui):
         #Инициализируем окно
         super().__init__()
         self.setupUi(self)
-        self.tableWidget.insertRow(0)
-        print(self.tableWidget.columnCount())
-        print(self.tableWidget.rowCount())
-        print(self.tableWidget.item(0, 1))
-        self.tableWidget.setItem(0, 1, QTableWidgetItem("Text in column 1"))
+        self.pushButton.clicked.connect(self.btnClicked1)
+        self.pushButton_2.clicked.connect(self.btnClicked2)
+        self.pushButton_3.clicked.connect(self.btnClicked3)
+
+    def btnClicked1(self):
+        # Объявляем новый поток
+        self.demanm1 = threading.Thread(target=Script.monthly_plan(self))
+        # Запускаем новый поток
+        self.deman1.start()
+
+
+    def btnClicked2(self):
+        pass
+
+    def btnClicked3(self):
+        pass
