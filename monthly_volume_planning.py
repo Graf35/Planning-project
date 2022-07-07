@@ -1,12 +1,11 @@
 #Эти библиотеки позволяют работать с графикой.
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 from PyQt5 import  uic
-from PyQt5.QtWidgets import QFileDialog
 import Script
-import shutil
 #Этот модуль позволяет использовать многопоточность
 import threading
+import logging
+
 
 
 
@@ -22,6 +21,8 @@ class Monthly_volume_planning(QtWidgets.QMainWindow, ui):
         self.pushButton.clicked.connect(self.btnClicked1)
         self.pushButton_2.clicked.connect(self.btnClicked2)
         self.pushButton_3.clicked.connect(self.btnClicked3)
+        logging.info("Окно месячного планирования объёмов создано")
+
 
     def btnClicked1(self):
         # Объявляем новый поток

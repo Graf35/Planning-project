@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
+    <width>2314</width>
     <height>639</height>
    </rect>
   </property>
@@ -24,12 +24,16 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1500</width>
+    <width>2500</width>
     <height>639</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Годовое планирование объёмов</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="icon.ico">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -40,7 +44,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>1500</width>
+     <width>16777215</width>
      <height>603</height>
     </size>
    </property>
@@ -48,12 +52,15 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>1502</width>
-      <height>596</height>
+      <y>15</y>
+      <width>2231</width>
+      <height>1291</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -77,12 +84,89 @@
          </property>
         </widget>
        </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="text">
+              <string>Заполнить</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="text">
+                <string>ЦФО</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_2">
+               <property name="text">
+                <string>Проект</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_3">
+               <property name="text">
+                <string>Задача</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_4">
+               <property name="text">
+                <string>Отдел</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_9">
+               <property name="text">
+                <string>Основание операции</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLineEdit" name="lineEdit_5"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_6"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_7"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_8"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_10"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
      <item>
       <widget class="QTableWidget" name="tableWidget">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -97,7 +181,7 @@
         <enum>Qt::NoPen</enum>
        </property>
        <property name="columnCount">
-        <number>7</number>
+        <number>17</number>
        </property>
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>131</number>
@@ -119,12 +203,62 @@
        </column>
        <column>
         <property name="text">
-         <string>Месяц выполнения работ</string>
+         <string>Описание</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>ЦФО</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Проект</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Отдел</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Описание отдела</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Задача</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Описание задачи</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Основание операции</string>
         </property>
        </column>
        <column>
         <property name="text">
          <string>Операция с активом</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Описание операции</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Месяц выполнения работ</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Трудоёмкость</string>
         </property>
        </column>
        <column>
@@ -147,8 +281,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1500</width>
-     <height>18</height>
+     <width>2314</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -7,6 +7,9 @@ from monthly_volume_planning import Monthly_volume_planning
 
 #Этот модуль позволяет использовать многопоточность
 import threading
+#Импортируем модуль logging. Он необходим для возможности логирования.
+import logging
+import log
 
 #Определяем имя и путь до файлас формой окна.
 ui=uic.loadUiType("interface/Main_window.ui")[0]
@@ -21,6 +24,9 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         self.pushButton.clicked.connect(self.btnClicked1)
         self.pushButton_2.clicked.connect(self.btnClicked2)
         #self.pushButton_3.clicked.connect(self.btnClicked3)
+        # Применяем настройки логирования
+        logger = log.Deman_log()
+
 
     def btnClicked1(self):
         self.Annual_volume_planning_window = Annual_volume_planning()  # Создаём объект класса`
@@ -35,7 +41,3 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         self.deman1 = threading.Thread(target=self.monthly_volume_planning_window.show())
         # Запускаем новый поток
         self.deman1.start()
-
-    def sourse(self):
-        #Определяем путь до файла
-        fname = QFileDialog.getOpenFileName(self, 'Open file', '/sourse')[0]
