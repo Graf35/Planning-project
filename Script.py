@@ -4,7 +4,7 @@ import time
 import logging
 import pandas as pd
 import numpy as np
-from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
+from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget, QTableWidgetItem
 import threading
 
 def loading_assets(parent, filename):
@@ -84,31 +84,60 @@ def date_for_zvr(parent,cfo, project, task, department, basis_operation):
 
 
 def creature_zvr(parent):
+    month={"01":"Январь", "02":"Февраль", "03":"Март","04":"Апрель",
+           "05":"Май", "06":"Июнь", "07":"Июль", "08":"Август",
+           "09":"Сентябрь", "10":"Октябрь", "11":"Ноябрь", "12":"Декабрь"}
+    operation=["ТО", "ТР", "КР"]
     logging.info("Создаю ЗВР")
     logging.info("Синхронизируюсь с базой")
     assets = pd.read_excel('Database/assets.xlsx')
     assets["Номер ЗВР"] = np.nan
     assets["Статус ЗВР"] = np.nan
+    assets["Трудоёмкость"] = np.nan
+    assets["Описание операции"] = np.nan
+    assets["Месяц ремонта"] = np.nan
+    assets["Операция с активом"]= np.nan
     for i in range(parent.tableWidget.rowCount()):
         try:
-            assets["Месяц ремонта"][i]= parent.tableWidget.item(i, 12).text()
+            if str(parent.tableWidget.item(i, 13).text()) in month.keys():
+                assets["Месяц ремонта"][i] = month[str(parent.tableWidget.item(i, 13).text())]
+            else:
+                logging.error("У актива " + str(assets["Номер актива"][i]) + " неверный формат месяца")
+                continue
         except:
-            logging.error("У актива "+str(assets["Номер актива"][i])+"не указана дата ремонта")
-            assets["Месяц ремонта"][i]=" "
+            logging.error("У актива " + str(assets["Номер актива"][i]) + " не указан месяц ремонта")
             continue
         try:
-            assets["Операция с активом"][i] = parent.tableWidget.item(i, 14).text()
+            assets["Операция с активом"][i] = str(parent.tableWidget.item(i, 11).text())
         except:
-            logging.error("У актива " + str(assets["Номер актива"][i]) + "не указана операция с активом")
+            logging.error("У актива " + str(assets["Номер актива"][i]) + " не указана операция с активом")
             assets["Операция с активом"][i]=" "
+            continue
+        if assets["Операция с активом"][i] in operation:
+            if parent.tableWidget.item(i, 11).text()=="TO" or parent.tableWidget.item(i, 11).text()=="TО" or parent.tableWidget.item(i, 11).text()=="ТO" or parent.tableWidget.item(i, 11).text()=="ТО":
+                Technical_card_ТО = pd.read_csv('Database/ТО.csv', ";", encoding='windows-1251')
+                assets["Трудоёмкость"][i]=round(Technical_card_ТО["Трудоемкость"].drop(0).sum(), 2)
+                assets["Описание операции"][i]="Техническое обслуживание"
+            elif parent.tableWidget.item(i, 11).text()=="ТР" or parent.tableWidget.item(i, 11).text()=="TР" or parent.tableWidget.item(i, 11).text()=="ТP" or parent.tableWidget.item(i, 11).text()=="ТР":
+                Technical_card_ТP = pd.read_csv('Database/ТР.csv', ";", encoding='windows-1251')
+                assets["Трудоёмкость"][i] = round(Technical_card_ТP["Трудоемкость"].drop(0).sum(), 2)
+                assets["Описание операции"][i] = "Текущий ремонт"
+            elif parent.tableWidget.item(i, 11).text()=="КР" or parent.tableWidget.item(i, 11).text()=="KР" or parent.tableWidget.item(i, 11).text()=="КP" or parent.tableWidget.item(i, 11).text()=="КР":
+                Technical_card_KP = pd.read_csv('Database/КР.csv', ";", encoding='windows-1251')
+                assets["Трудоёмкость"][i] = round(Technical_card_KP["Трудоемкость"].drop(0).sum(), 2)
+                assets["Описание операции"][i] = "капитальный ремонт"
+        else:
+            logging.error("У актива " + str(assets["Номер актива"][i]) + " неизвестный тип операции")
             continue
         config=filereader("config.config")
         zvrnomber=int(config['zvrnomber'])
         assets["Номер ЗВР"][i] = 'АВ-' + str(int(zvrnomber) + 1)
         configupdate(int(zvrnomber) + 1)
-        parent.tableWidget.setItem(i, 16, QTableWidgetItem(assets["Номер ЗВР"][i]))
+        parent.tableWidget.setItem(i, 12, QTableWidgetItem(str(assets["Описание операции"][i])))
+        parent.tableWidget.setItem(i, 14, QTableWidgetItem(str(assets["Трудоёмкость"][i])))
+        parent.tableWidget.setItem(i, 15, QTableWidgetItem(str(assets["Номер ЗВР"][i])))
         assets["Статус ЗВР"][i] = "проект"
-        parent.tableWidget.setItem(i, 17, QTableWidgetItem(str(assets["Статус ЗВР"][i])))
+        parent.tableWidget.setItem(i, 16, QTableWidgetItem(str(assets["Статус ЗВР"][i])))
         logging.info("Создан ЗВР " + str(assets["Номер ЗВР"][i]))
     logging.info("Создание ЗВР завершено")
     assets.to_excel("Database/assets.xlsx")

@@ -41,9 +41,9 @@ class Annual_volume_planning(QtWidgets.QMainWindow, ui):
 
     def btnClicked3(self):
         # Объявляем новый поток
-        self.deman1 = threading.Thread(target=Script.creature_zvr(self))
+        self.deman11 = threading.Thread(target=Script.creature_zvr(self))
         # Запускаем новый поток
-        self.deman1.start()
+        self.deman11.start()
 
     def btnClicked4(self):
         cfo = self.lineEdit_5.text()
