@@ -21,10 +21,10 @@ def loading_assets(parent, filename):
             assets["Описание"][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])] = EAM["Описание актива"][i]
             # Выводим пользователю сообщение
             parent.tableWidget.insertRow(str_index)
-            parent.tableWidget.setItem(str_index, 0, QTableWidgetItem(str(assets["Организация "][str_index])))
-            parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(str(assets["Номер актива"][str_index])))
-            parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(str(assets["Номер родительского актива"][str_index])))
-            parent.tableWidget.setItem(str_index, 3,QTableWidgetItem(str(assets["Описание"][str_index])))
+            parent.tableWidget.setItem(str_index, 0, QTableWidgetItem(str(assets["Организация "][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])])))
+            parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(str(assets["Номер актива"][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])])))
+            parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(str(assets["Номер родительского актива"][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])])))
+            parent.tableWidget.setItem(str_index, 3,QTableWidgetItem(str(assets["Описание"][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])])))
             str_index +=1
     logging.info("Сверка с базой закончена")
     assets.to_excel("Database/assets.xlsx")
