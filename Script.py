@@ -6,7 +6,6 @@ import pandas as pd
 import numpy as np
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
 import threading
-from data_for_ZVR import data_for_zvr
 
 def loading_assets(parent, filename):
     logging.info("Запущена проверка загрузки активов")
@@ -32,39 +31,56 @@ def loading_assets(parent, filename):
     logging.info("Создана база годового объёма ремонта")
 
 def date_for_zvr(parent,cfo, project, task, department, basis_operation):
+    tasks={'1':"Услуги ТМЦ сторонних", '3':"Услуги механик", '4':"Сервис ЧЭК"}
+    departments={"Внешний":"Услуги подрядной организации", "Механик":"ООО Механик"}
     logging.info("Заполняю ЗВР")
     logging.info("Синхронизируюсь с базой")
     assets = pd.read_excel('Database/assets.xlsx')
-    assets["ЦФО"] = np.nan
-    assets["Проект"] = np.nan
-    assets["Отдел"] = np.nan
-    assets["Описание отдела"] = np.nan
-    assets["Задача"] = np.nan
-    assets["Описание задачи"] = np.nan
-    assets["Основание операции"] = np.nan
-    assets["Операция с активом"] = np.nan
-    assets["Описание операции"] = np.nan
-    assets["Месяц выполнения работ"] = np.nan
-    assets["Трудоёмкость"] = np.nan
-    assets["Номер родительского актива"] = np.nan
-    print(1)
-    for i in range(parent.tableWidget.rowCount()):
-        assets["ЦФО"][i]=cfo
-        assets["Проект"]=project
+    if cfo == '':
+        logging.error("Ошибка заполнения раздела ЦФО")
+        assets["ЦФО"] = np.nan
+    else:
+        assets["ЦФО"] = cfo
+    if project == '':
+        logging.error("Ошибка заполнения раздела Проект")
+        assets["Проект"] = np.nan
+    else:
+        assets["Проект"] = project
+    if department == '':
+        logging.error("Ошибка заполнения раздела отдел")
+        assets["Отдел"] = np.nan
+    else:
         assets["Отдел"] = department
-        assets["Описание отдела"] = np.nan
+    try:
+        assets["Описание отдела"] = departments[str(department)]
+    except:
+        logging.error("Неизвестный отдел")
+        assets["Описание отдела"]=np.nan
+    if task == '':
+        logging.error("Ошибка заполнения раздела Задание")
+        assets["Задача"] = np.nan
+    else:
         assets["Задача"] = task
+    try:
+        assets["Описание задачи"] = tasks[str(task)]
+    except:
+        logging.error("Неизвестная задача")
         assets["Описание задачи"] = np.nan
-        assets["Основание операции"] = basis_operation
-        print(1)
-        parent.tableWidget.setItem(i, 5, QTableWidgetItem(str(assets["ЦФО"][i])))
-        parent.tableWidget.setItem(i, 6, QTableWidgetItem(str(assets["Проект"][i])))
-        parent.tableWidget.setItem(i, 7, QTableWidgetItem(str(assets["Отдел"][i])))
-        parent.tableWidget.setItem(i, 8, QTableWidgetItem(str(assets["Описание отдела"][i])))
-        parent.tableWidget.setItem(i, 9, QTableWidgetItem(str(assets["Задача"][i])))
-        parent.tableWidget.setItem(i, 10, QTableWidgetItem(str(assets["Описание задачи"][i])))
-        parent.tableWidget.setItem(i, 11, QTableWidgetItem(str(assets["Основание операции"][i])))
+    if basis_operation == '':
+        logging.error("Ошибка заполнения раздела основание операции")
+        assets["Основание операции"] = np.nan
+    else:
+        assets["Основание операции"] =basis_operation
+    for i in range(parent.tableWidget.rowCount()):
+        parent.tableWidget.setItem(i, 4, QTableWidgetItem(str(assets["ЦФО"][i])))
+        parent.tableWidget.setItem(i, 5, QTableWidgetItem(str(assets["Проект"][i])))
+        parent.tableWidget.setItem(i, 6, QTableWidgetItem(str(assets["Отдел"][i])))
+        parent.tableWidget.setItem(i, 7, QTableWidgetItem(str(assets["Описание отдела"][i])))
+        parent.tableWidget.setItem(i, 8, QTableWidgetItem(str(assets["Задача"][i])))
+        parent.tableWidget.setItem(i, 9, QTableWidgetItem(str(assets["Описание задачи"][i])))
+        parent.tableWidget.setItem(i, 10, QTableWidgetItem(str(assets["Основание операции"][i])))
     assets.to_excel("Database/assets.xlsx")
+    logging.info("База годового объёма ремонта обновлена")
 
 
 def creature_zvr(parent):
