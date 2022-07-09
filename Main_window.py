@@ -2,6 +2,8 @@
 from PyQt5 import QtWidgets
 from PyQt5 import  uic
 from PyQt5.QtWidgets import QFileDialog
+
+import Script
 from Annual_volume_planning import Annual_volume_planning
 from monthly_volume_planning import Monthly_volume_planning
 
@@ -23,7 +25,7 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         # Прописываем действие на нажатие кнопки
         self.pushButton.clicked.connect(self.btnClicked1)
         self.pushButton_2.clicked.connect(self.btnClicked2)
-        #self.pushButton_3.clicked.connect(self.btnClicked3)
+        self.pushButton_3.clicked.connect(self.btnClicked3)
         # Применяем настройки логирования
         logger = log.Deman_log()
 
@@ -41,3 +43,19 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         self.deman1 = threading.Thread(target=self.monthly_volume_planning_window.show())
         # Запускаем новый поток
         self.deman1.start()
+
+    def btnClicked3(self):
+        try:
+            report = self.comboBox.currentText()
+        except:
+            logging.error("Не выбран номер отчёта")
+        try:
+            month = self.comboBox2.currentText()
+        except:
+            logging.error("Не выбран период отчёта")
+        if report=="ЕАМ121":
+            #Script.report_EAM121(fname, month)
+            pass
+        elif report=="ЕАМ607":
+            fname = QFileDialog.getSaveFileName(self, 'Save File', 'report607.csv')[0]
+            Script.report_EAM607(fname)

@@ -4,7 +4,6 @@ from PyQt5 import  uic
 from PyQt5.QtWidgets import QFileDialog
 import Script
 import shutil
-from PyQt5.QtGui import QPixmap
 #Этот модуль позволяет использовать многопоточность
 import threading
 import logging

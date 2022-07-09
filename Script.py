@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget, QTableWidgetItem
 import threading
+import shutil
 
 def loading_assets(parent, filename):
     logging.info("Запущена проверка загрузки активов")
@@ -145,9 +146,15 @@ def creature_zvr(parent):
     assets.to_excel("Database/assets.xlsx")
     logging.info("База годового объёма ремонта обновлена")
 
+
 def monthly_plan(parent):
     month=parent.comboBox.currentText()
 
+def report_EAM121(fname, month):
+    pass
+
+def report_EAM607(fname):
+    shutil.copy('Database/EAM607.csv', str(fname))
 
 def filereader(fail_name):
     sting=[]
