@@ -50,12 +50,14 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         except:
             logging.error("Не выбран номер отчёта")
         try:
-            month = self.comboBox2.currentText()
+            month = self.comboBox_2.currentText()
         except:
             logging.error("Не выбран период отчёта")
         if report=="ЕАМ121":
-            #Script.report_EAM121(fname, month)
-            pass
+            fname = QFileDialog.getExistingDirectory(self)
+            Script.report_EAM121(fname, month)
+            logging.info("Выгружен EAM 121 в " + str(fname)+" за период "+str(month))
         elif report=="ЕАМ607":
             fname = QFileDialog.getSaveFileName(self, 'Save File', 'report607.csv')[0]
             Script.report_EAM607(fname)
+            logging.info("Выгружен EAM 607 в " + str(fname))

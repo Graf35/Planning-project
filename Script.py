@@ -6,8 +6,12 @@ import logging
 import pandas as pd
 import numpy as np
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget, QTableWidgetItem
-import threading
+import os
 import shutil
+from docxtpl import DocxTemplate
+from Office import World
+
+
 
 def loading_assets(parent, filename):
     logging.info("Запущена проверка загрузки активов")
@@ -100,6 +104,8 @@ def creature_zvr(parent):
     assets["Месяц ремонта"] = np.nan
     assets["Операция с активом"]= np.nan
     assets["Дата создания"] = date.today()
+    assets["Дата начала"] = np.nan
+    assets["Дата окончания"] = np.nan
     for i in range(parent.tableWidget.rowCount()):
         try:
             if str(parent.tableWidget.item(i, 13).text()) in month.keys():
@@ -151,7 +157,93 @@ def monthly_plan(parent):
     month=parent.comboBox.currentText()
 
 def report_EAM121(fname, month):
-    pass
+    # Активируем возможность работы с файлами .doxc
+    Word = World()
+    temp_dir=os.getcwd()
+    logging.info("Синхронизируюсь с базой")
+    assets = pd.read_excel('Database/assets.xlsx')
+    month_daes={"Январь": 31, "Февраль": 28, "Март": 31, "Апрель":30,
+           "Май":31, "Июнь":30, "Июль":31, "Август":31,
+           "Сентябрь":30, "Октябрь":31, "Ноябрь":30, "Декабрь":31}
+    month_nom={"Январь": "01", "Февраль": "02", "Март": "03", "Апрель":"04",
+           "Май":"05", "Июнь":"06", "Июль":"07", "Август":"08",
+           "Сентябрь":"09", "Октябрь":"10", "Ноябрь":"11", "Декабрь":"12"}
+    os.chdir(str(fname))
+    try:
+        os.mkdir(str(fname)+"/EAM121")
+    except:
+        pass
+    if month=="Год":
+        logging.info("Создаю ЕАМ121 на год в директорию "+str(fname))
+        os.chdir(str(fname) + "/EAM121")
+        for i in range(len(list(month_daes.keys()))):
+            try:
+                os.mkdir(str(fname) + "/EAM121/"+str(list(month_daes.keys())[i]))
+            except:
+                continue
+        for i in range((assets.shape[0])):
+            os.chdir(temp_dir)
+            shutil.copy('template/EAM121.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
+                assets["Номер ЗВР"][i]) + ".docx")
+            data_report = {"date": str(assets["Дата создания"][i]), "zvr": str(assets["Номер ЗВР"][i]),
+                           "division": str(assets["Организация "][i]),
+                           "asset": str(assets["Номер актива"][i]),
+                           "parent_asset": str(assets["Номер родительского актива"][i]),
+                           "operation": str(assets["Операция с активом"][i]),
+                           "laboriousness": str(assets["Трудоёмкость"][i]),
+                           "basis_of_the_operation": str(assets["Основание операции"][i]),
+                           "project": str(assets["Проект"][i]),
+                           "planned_start_date": "01-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023",
+                           "planned_end_date": str(month_daes[assets["Месяц ремонта"][i]]) + "-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023",
+                           "description": str(assets["Описание"][i]),
+                           "description_of_the_operation": str(assets["Описание операции"][i]),
+                           "department_description": str(assets["Описание отдела"][i]),
+                           "department": str(assets["Отдел"][i]),
+                           "task": str(assets["Задача"][i]), "task_description": str(assets["Описание задачи"][i]),
+                           "statust": str(assets["Статус ЗВР"][i]), "tsfo": str(assets["ЦФО"][i]),
+                           "actual_start_date": str(assets["Дата начала"][i]),
+                           "actual_end_date": str(assets["Дата окончания"][i]),
+                           "print_date": str(date.today()), "creator": str(os.environ.get("USERNAME"))}
+            # Активируем файл
+            os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
+            Word.record(data_report)
+            Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+            logging.info("Отчёт "+str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i])+"/"+str(assets["Номер ЗВР"][i]) + ".docx создан")
+    else:
+        logging.info("Создаю ЕАМ121 на "+str(month)+ " в директорию" + str(fname))
+        try:
+            os.mkdir(str(fname) + "/EAM121/" + str(month))
+        except:
+            pass
+        for i in range((assets.shape[0])):
+            if assets["Месяц ремонта"][i]==month:
+                os.chdir(temp_dir)
+                shutil.copy('template/EAM121.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(assets["Номер ЗВР"][i]) + ".docx")
+                data_report={"date": str(assets["Дата создания"][i]), "zvr": str(assets["Номер ЗВР"][i]),
+               "division": str(assets["Организация "][i]),
+               "asset": str(assets["Номер актива"][i]), "parent_asset": str(assets["Номер родительского актива"][i]),
+               "operation": str(assets["Операция с активом"][i]), "laboriousness": str(assets["Трудоёмкость"][i]),
+               "basis_of_the_operation": str(assets["Основание операции"][i]), "project": str(assets["Проект"][i]),
+               "planned_start_date": "01-" + str(month_nom[month]) + "-2023",
+               "planned_end_date": str(month_daes[month]) + "-" + month_nom[month] + "-2023",
+               "description": str(assets["Описание"][i]),
+               "description_of_the_operation": str(assets["Описание операции"][i]),
+               "department_description": str(assets["Описание отдела"][i]), "department": str(assets["Отдел"][i]),
+               "task": str(assets["Задача"][i]), "task_description": str(assets["Описание задачи"][i]),
+               "statust": str(assets["Статус ЗВР"][i]), "tsfo": str(assets["ЦФО"][i]),
+               "actual_start_date": str(assets["Дата начала"][i]),
+               "actual_end_date": str(assets["Дата окончания"][i]),
+               "print_date": str(date.today()), "creator": str(os.environ.get("USERNAME"))}
+                # Активируем файл
+                os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
+                Word.record(data_report)
+                Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+                logging.info("Отчёт " + str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
+                    assets["Номер ЗВР"][i]) + ".docx создан")
+
+
+
+
 
 def report_EAM607(fname):
     shutil.copy('Database/EAM607.csv', str(fname))
