@@ -1,5 +1,6 @@
 #Импортируем модуль math. Он необходим для сложных вычислений.
 import time
+from datetime import date
 #Импортируем модуль logging. Он необходим для возможности логирования.
 import logging
 import pandas as pd
@@ -97,6 +98,7 @@ def creature_zvr(parent):
     assets["Описание операции"] = np.nan
     assets["Месяц ремонта"] = np.nan
     assets["Операция с активом"]= np.nan
+    assets["Дата создания"] = date.today()
     for i in range(parent.tableWidget.rowCount()):
         try:
             if str(parent.tableWidget.item(i, 13).text()) in month.keys():
