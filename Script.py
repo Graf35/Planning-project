@@ -154,6 +154,44 @@ def creature_zvr(parent):
 
 def monthly_plan(parent):
     month=parent.comboBox.currentText()
+    str_index=0
+    month_daes = {"Январь": 31, "Февраль": 28, "Март": 31, "Апрель": 30,
+                  "Май": 31, "Июнь": 30, "Июль": 31, "Август": 31,
+                  "Сентябрь": 30, "Октябрь": 31, "Ноябрь": 30, "Декабрь": 31}
+    month_nom = {"Январь": "01", "Февраль": "02", "Март": "03", "Апрель": "04",
+                 "Май": "05", "Июнь": "06", "Июль": "07", "Август": "08",
+                 "Сентябрь": "09", "Октябрь": "10", "Ноябрь": "11", "Декабрь": "12"}
+    logging.info("Синхронизируюсь с базой")
+    assets = pd.read_excel('Database/assets.xlsx')
+    for i in range((assets.shape[0])):
+        if assets["Месяц ремонта"][i] == month:
+            parent.tableWidget.insertRow(str_index)
+            parent.tableWidget.setItem(str_index, 0, QTableWidgetItem(assets["Номер ЗВР"][i]))
+            parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(assets["Номер родительского актива"][i]))
+            parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(assets["Номер актива"][i]))
+            parent.tableWidget.setItem(str_index, 3, QTableWidgetItem(assets["Операция с активом"][i]))
+            parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
+            parent.tableWidget.setItem(str_index, 5, QTableWidgetItem("01-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
+            parent.tableWidget.setItem(str_index, 6, QTableWidgetItem(str(month_daes[assets["Месяц ремонта"][i]]) + "-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
+
+
+def release_zvr(parent):
+    month = parent.comboBox.currentText()
+    str_index = 0
+    logging.info("Синхронизируюсь с базой")
+    assets = pd.read_excel('Database/assets.xlsx')
+    for i in range((assets.shape[0])):
+        if assets["Месяц ремонта"][i] == month:
+            assets["Дата начала"][i] = date.today()
+            assets["Статус ЗВР"][i] = "Выпощено"
+            parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
+            parent.tableWidget.setItem(str_index, 7, QTableWidgetItem(str(assets["Дата начала"][i])))
+            str_index += 1
+            logging.info("ЗВР "+str(assets["Номер ЗВР"][i])+" изменил статус на "+ str(assets["Статус ЗВР"][i]))
+    assets.to_excel("Database/assets.xlsx")
+    logging.info("База годового объёма ремонта обновлена")
+
+
 
 def report_EAM121(fname, month):
     # Активируем возможность работы с файлами .doxc
@@ -211,6 +249,7 @@ def report_EAM121(fname, month):
             os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
             Word.record(data_report)
             Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+            os.chdir(temp_dir)
             logging.info("Отчёт "+str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i])+"/"+str(assets["Номер ЗВР"][i]) + ".docx создан")
     else:
         logging.info("Создаю ЕАМ121 на "+str(month)+ " в директорию" + str(fname))
@@ -221,7 +260,21 @@ def report_EAM121(fname, month):
         for i in range((assets.shape[0])):
             if assets["Месяц ремонта"][i]==month:
                 os.chdir(temp_dir)
-                shutil.copy('template/EAM121.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(assets["Номер ЗВР"][i]) + ".docx")
+                if assets["Операция с активом"][i] == "TO" or assets["Операция с активом"][i] == "TО" or \
+                        assets["Операция с активом"][i] == "ТO" or assets["Операция с активом"][i] == "ТО":
+                    shutil.copy('template/EAM121/EAM121ТО.docx',
+                                str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
+                                    assets["Номер ЗВР"][i]) + ".docx")
+                elif assets["Операция с активом"][i] == "TP" or assets["Операция с активом"][i] == "TР" or \
+                        assets["Операция с активом"][i] == "ТP" or assets["Операция с активом"][i] == "ТР":
+                    shutil.copy('template/EAM121/EAM121ТР.docx',
+                                str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
+                                    assets["Номер ЗВР"][i]) + ".docx")
+                elif assets["Операция с активом"][i] == "КР" or assets["Операция с активом"][i] == "КP" or \
+                        assets["Операция с активом"][i] == "KР" or assets["Операция с активом"][i] == "KP":
+                    shutil.copy('template/EAM121/EAM121КР.docx',
+                                str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
+                                    assets["Номер ЗВР"][i]) + ".docx")
                 data_report={"date": str(assets["Дата создания"][i]), "zvr": str(assets["Номер ЗВР"][i]),
                "division": str(assets["Организация "][i]),
                "asset": str(assets["Номер актива"][i]), "parent_asset": str(assets["Номер родительского актива"][i]),
@@ -241,12 +294,9 @@ def report_EAM121(fname, month):
                 os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
                 Word.record(data_report)
                 Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+                os.chdir(temp_dir)
                 logging.info("Отчёт " + str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
                     assets["Номер ЗВР"][i]) + ".docx создан")
-
-
-
-
 
 def report_EAM607(fname):
     shutil.copy('Database/EAM607.csv', str(fname))

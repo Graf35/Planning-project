@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1887</width>
-    <height>424</height>
+    <width>1500</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -133,13 +133,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Выгрузить месячный план</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -173,6 +166,11 @@
        </column>
        <column>
         <property name="text">
+         <string>Операция с активом</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
          <string>Статус ЗВР</string>
         </property>
        </column>
@@ -198,7 +196,12 @@
        </column>
        <column>
         <property name="text">
-         <string>Заказ принял</string>
+         <string>Работу сдал</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Работу принял</string>
         </property>
        </column>
       </widget>
@@ -211,8 +214,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1887</width>
-     <height>26</height>
+     <width>1500</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>

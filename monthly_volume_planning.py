@@ -20,19 +20,18 @@ class Monthly_volume_planning(QtWidgets.QMainWindow, ui):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.btnClicked1)
         self.pushButton_2.clicked.connect(self.btnClicked2)
-        self.pushButton_3.clicked.connect(self.btnClicked3)
         logging.info("Окно месячного планирования объёмов создано")
 
 
     def btnClicked1(self):
         # Объявляем новый поток
-        self.demanm1 = threading.Thread(target=Script.monthly_plan(self))
+        self.deman31 = threading.Thread(target=Script.monthly_plan(self))
         # Запускаем новый поток
-        self.deman1.start()
+        self.deman31.start()
 
 
     def btnClicked2(self):
-        pass
+        self.deman32 = threading.Thread(target=Script.release_zvr(self))
+        # Запускаем новый поток
+        self.deman32.start()
 
-    def btnClicked3(self):
-        pass
