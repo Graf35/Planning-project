@@ -8,7 +8,6 @@ import numpy as np
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget, QTableWidgetItem
 import os
 import shutil
-from docxtpl import DocxTemplate
 from Office import World
 
 
@@ -183,8 +182,12 @@ def report_EAM121(fname, month):
                 continue
         for i in range((assets.shape[0])):
             os.chdir(temp_dir)
-            shutil.copy('template/EAM121.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
-                assets["Номер ЗВР"][i]) + ".docx")
+            if assets["Операция с активом"][i]=="TO" or assets["Операция с активом"][i]=="TО" or assets["Операция с активом"][i]=="ТO" or assets["Операция с активом"][i]=="ТО":
+                shutil.copy('template/EAM121/EAM121ТО.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(assets["Номер ЗВР"][i]) + ".docx")
+            elif assets["Операция с активом"][i]=="TP" or assets["Операция с активом"][i]=="TР" or assets["Операция с активом"][i]=="ТP" or assets["Операция с активом"][i]=="ТР":
+                shutil.copy('template/EAM121/EAM121ТР.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(assets["Номер ЗВР"][i]) + ".docx")
+            elif assets["Операция с активом"][i]=="КР" or assets["Операция с активом"][i]=="КP" or assets["Операция с активом"][i]=="KР" or assets["Операция с активом"][i]=="KP":
+                shutil.copy('template/EAM121/EAM121КР.docx', str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(assets["Номер ЗВР"][i]) + ".docx")
             data_report = {"date": str(assets["Дата создания"][i]), "zvr": str(assets["Номер ЗВР"][i]),
                            "division": str(assets["Организация "][i]),
                            "asset": str(assets["Номер актива"][i]),
