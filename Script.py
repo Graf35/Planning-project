@@ -183,7 +183,7 @@ def release_zvr(parent):
     for i in range((assets.shape[0])):
         if assets["Месяц ремонта"][i] == month:
             assets["Дата начала"][i] = date.today()
-            assets["Статус ЗВР"][i] = "Выпощено"
+            assets["Статус ЗВР"][i] = "Выпущено"
             parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
             parent.tableWidget.setItem(str_index, 7, QTableWidgetItem(str(assets["Дата начала"][i])))
             str_index += 1
