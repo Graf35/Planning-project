@@ -33,11 +33,12 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         # Применяем настройки логирования
         logger = log.Deman_log()
         config = Script.filereader("config.config")
-        if ctime(path.getmtime("Database/assets.xlsx"))!= config['update_time']:
-            self.closed_form_of_gold_reserves=Closed_form_of_gold_reserves()
-            self.deman55 = threading.Thread(target=self.closed_form_of_gold_reserves.show())
-            # Запускаем новый поток
-            self.deman55.start()
+        if config['update_time']!="1":
+            if ctime(path.getmtime("Database/assets.xlsx"))!= config['update_time']:
+                self.closed_form_of_gold_reserves=Closed_form_of_gold_reserves()
+                self.deman55 = threading.Thread(target=self.closed_form_of_gold_reserves.show())
+                # Запускаем новый поток
+                self.deman55.start()
 
 
     def btnClicked1(self):
