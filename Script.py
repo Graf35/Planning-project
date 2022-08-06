@@ -206,7 +206,7 @@ def database_read(parent):
     logging.info("Синхронизируюсь с базой")
     assets = pd.read_excel('Database/assets.xlsx')
     for i in range((assets.shape[0])):
-        if str(assets["Дата окончания"][i])!="NaT" and str(assets["Дата принятия"][i])=="NaT":
+        if str(assets["Дата окончания"][i])!="NaT" and str(assets["Дата принятия"][i])=="NaT" or "NaN" and str(assets["Статус ЗВР"][i])=="Выпущено":
             parent.tableWidget.insertRow(str_index)
             parent.tableWidget.setItem(str_index, 0, QTableWidgetItem(assets["Номер ЗВР"][i]))
             parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(assets["Номер родительского актива"][i]))
