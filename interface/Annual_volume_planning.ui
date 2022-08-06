@@ -11,16 +11,10 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1900</width>
-    <height>1000</height>
-   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -36,341 +30,329 @@
     <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>1900</width>
-     <height>1000</height>
-    </size>
-   </property>
    <property name="maximumSize">
     <size>
      <width>1900</width>
-     <height>1000</height>
+     <height>1900</height>
     </size>
    </property>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>15</y>
-      <width>2231</width>
-      <height>1291</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Создать ЗВР</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Выгрузить шаблон</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Импорт активов</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="pushButton_4">
+              <property name="text">
+               <string>Заполнить</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QLineEdit" name="lineEdit">
+                <property name="text">
+                 <string>ЦФО</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_2">
+                <property name="text">
+                 <string>Проект</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_3">
+                <property name="text">
+                 <string>Задача</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_4">
+                <property name="text">
+                 <string>Отдел</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_9">
+                <property name="text">
+                 <string>Основание операции</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QComboBox" name="comboBox_5">
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>30-СГЭ</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_4">
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1822-ОГЭ-ТЭЦ</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_3">
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>3</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>4</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_2">
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Механик</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Внешний</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox">
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>ППР</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Доп ППР</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Внеплан</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Техническое обслуживание</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Текущий ремонт</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustIgnored</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::CustomDashLine</enum>
+        </property>
+        <property name="columnCount">
+         <number>17</number>
+        </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>120</number>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>50</number>
+        </attribute>
+        <column>
          <property name="text">
-          <string>Создать ЗВР</string>
+          <string>Организация</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
+        </column>
+        <column>
          <property name="text">
-          <string>Выгрузить шаблон</string>
+          <string>№ Актива</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
+        </column>
+        <column>
          <property name="text">
-          <string>Импорт активов</string>
+          <string>Родительский Актив</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="text">
-              <string>Заполнить</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLineEdit" name="lineEdit">
-               <property name="text">
-                <string>ЦФО</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_2">
-               <property name="text">
-                <string>Проект</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_3">
-               <property name="text">
-                <string>Задача</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_4">
-               <property name="text">
-                <string>Отдел</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_9">
-               <property name="text">
-                <string>Основание операции</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QComboBox" name="comboBox_5">
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>30-СГЭ</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox_4">
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>1822-ОГЭ-ТЭЦ</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox_3">
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>3</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>4</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox_2">
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Механик</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Внешний</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox">
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>ППР</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Доп ППР</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Внеплан</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Техническое обслуживание</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Текущий ремонт</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>1500</width>
-         <height>300</height>
-        </size>
-       </property>
-       <property name="gridStyle">
-        <enum>Qt::NoPen</enum>
-       </property>
-       <property name="columnCount">
-        <number>17</number>
-       </property>
-       <attribute name="horizontalHeaderDefaultSectionSize">
-        <number>131</number>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Организация</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>№ Актива</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Родительский Актив</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Описание</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>ЦФО</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Проект</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Отдел</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Описание отдела</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Задача</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Описание задачи</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Основание операции</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Операция с активом</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Описание операции</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Месяц выполнения работ</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Трудоёмкость</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>№ ЗВР</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Статус ЗВР</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+        </column>
+        <column>
+         <property name="text">
+          <string>Описание</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>ЦФО</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Проект</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Отдел</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Описание отдела</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Задача</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Описание задачи</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Основание операции</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Операция с активом</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Описание операции</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Месяц выполнения работ</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Трудоёмкость</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>№ ЗВР</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Статус ЗВР</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
