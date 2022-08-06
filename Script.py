@@ -376,7 +376,7 @@ def configupdate(zvr=None, update_time=None):
                 file.write(line)
 
 def base_update(base):
-    if os.path.exists("assets.xlsx"):
+    if os.path.exists("Database/assets.xlsx"):
         pass
     else:
         shutil.copyfile('template/database/assets.xlsx', 'Database/assets.xlsx')
