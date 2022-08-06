@@ -377,15 +377,16 @@ def configupdate(zvr=None, update_time=None):
 
 def base_update(base):
     if os.path.exists("assets.xlsx"):
-        try:
-            base.to_excel("Database/assets.xlsx")
-        except:
-            logging.error("Открыт файл базы данных")
-        update=time.ctime(os.path.getmtime("Database/assets.xlsx"))
-        configupdate(update_time=update)
-        logging.info("Создана база годового объёма ремонта")
+        pass
     else:
         shutil.copyfile('template/database/assets.xlsx', 'Database/assets.xlsx')
+    try:
+        base.to_excel("Database/assets.xlsx")
+    except:
+        logging.error("Открыт файл базы данных")
+    update = time.ctime(os.path.getmtime("Database/assets.xlsx"))
+    configupdate(update_time=update)
+    logging.info("Создана база годового объёма ремонта")
 
 
 
