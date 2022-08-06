@@ -45,9 +45,9 @@ class Annual_volume_planning(QtWidgets.QMainWindow, ui):
         self.deman11.start()
 
     def btnClicked4(self):
-        cfo = self.lineEdit_5.text()
-        project = self.lineEdit_6.text()
-        task = self.lineEdit_7.text()
-        department = self.lineEdit_8.text()
-        basis_operation = self.lineEdit_10.text()
+        cfo = self.comboBox_5.currentText()
+        project = self.comboBox_4.currentText()
+        task = self.comboBox_3.currentText()
+        department = self.comboBox_2.currentText()
+        basis_operation = self.comboBox.currentText()
         Script.date_for_zvr(self, cfo, project, task, department, basis_operation)

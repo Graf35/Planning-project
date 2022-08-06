@@ -2,10 +2,14 @@
 from PyQt5 import QtWidgets
 from PyQt5 import  uic
 from PyQt5.QtWidgets import QFileDialog
-
+from time import ctime
+from os import path
 import Script
 from Annual_volume_planning import Annual_volume_planning
 from monthly_volume_planning import Monthly_volume_planning
+from closed_form_of_gold_reserves import Closed_form_of_gold_reserves
+
+
 
 #Этот модуль позволяет использовать многопоточность
 import threading
@@ -28,6 +32,12 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
         self.pushButton_3.clicked.connect(self.btnClicked3)
         # Применяем настройки логирования
         logger = log.Deman_log()
+        config = Script.filereader("config.config")
+        if ctime(path.getmtime("Database/assets.xlsx"))!= config['update_time']:
+            self.closed_form_of_gold_reserves=Closed_form_of_gold_reserves()
+            self.deman55 = threading.Thread(target=self.closed_form_of_gold_reserves.show())
+            # Запускаем новый поток
+            self.deman55.start()
 
 
     def btnClicked1(self):

@@ -32,8 +32,7 @@ def loading_assets(parent, filename):
             parent.tableWidget.setItem(str_index, 3,QTableWidgetItem(str(assets["Описание"][assets["Номер актива"].tolist().index(EAM["Номер актива"][i])])))
             str_index +=1
     logging.info("Сверка с базой закончена")
-    assets.to_excel("Database/assets.xlsx")
-    logging.info("Создана база годового объёма ремонта")
+    base_update(assets)
 
 def date_for_zvr(parent,cfo, project, task, department, basis_operation):
     tasks={'1':"Услуги ТМЦ сторонних", '3':"Услуги механик", '4':"Сервис ЧЭК"}
@@ -41,17 +40,17 @@ def date_for_zvr(parent,cfo, project, task, department, basis_operation):
     logging.info("Заполняю ЗВР")
     logging.info("Синхронизируюсь с базой")
     assets = pd.read_excel('Database/assets.xlsx')
-    if cfo == '':
+    if cfo == ' ':
         logging.error("Ошибка заполнения раздела ЦФО")
         assets["ЦФО"] = np.nan
     else:
         assets["ЦФО"] = cfo
-    if project == '':
+    if project == ' ':
         logging.error("Ошибка заполнения раздела Проект")
         assets["Проект"] = np.nan
     else:
         assets["Проект"] = project
-    if department == '':
+    if department == ' ':
         logging.error("Ошибка заполнения раздела отдел")
         assets["Отдел"] = np.nan
     else:
@@ -61,7 +60,7 @@ def date_for_zvr(parent,cfo, project, task, department, basis_operation):
     except:
         logging.error("Неизвестный отдел")
         assets["Описание отдела"]=np.nan
-    if task == '':
+    if task == ' ':
         logging.error("Ошибка заполнения раздела Задание")
         assets["Задача"] = np.nan
     else:
@@ -71,7 +70,7 @@ def date_for_zvr(parent,cfo, project, task, department, basis_operation):
     except:
         logging.error("Неизвестная задача")
         assets["Описание задачи"] = np.nan
-    if basis_operation == '':
+    if basis_operation == ' ':
         logging.error("Ошибка заполнения раздела основание операции")
         assets["Основание операции"] = np.nan
     else:
@@ -84,8 +83,7 @@ def date_for_zvr(parent,cfo, project, task, department, basis_operation):
         parent.tableWidget.setItem(i, 8, QTableWidgetItem(str(assets["Задача"][i])))
         parent.tableWidget.setItem(i, 9, QTableWidgetItem(str(assets["Описание задачи"][i])))
         parent.tableWidget.setItem(i, 10, QTableWidgetItem(str(assets["Основание операции"][i])))
-    assets.to_excel("Database/assets.xlsx")
-    logging.info("База годового объёма ремонта обновлена")
+    base_update(assets)
 
 
 def creature_zvr(parent):
@@ -105,6 +103,7 @@ def creature_zvr(parent):
     assets["Дата создания"] = date.today()
     assets["Дата начала"] = np.nan
     assets["Дата окончания"] = np.nan
+    assets["Дата принятия"] = np.nan
     for i in range(parent.tableWidget.rowCount()):
         try:
             if str(parent.tableWidget.item(i, 13).text()) in month.keys():
@@ -148,8 +147,7 @@ def creature_zvr(parent):
         parent.tableWidget.setItem(i, 16, QTableWidgetItem(str(assets["Статус ЗВР"][i])))
         logging.info("Создан ЗВР " + str(assets["Номер ЗВР"][i]))
     logging.info("Создание ЗВР завершено")
-    assets.to_excel("Database/assets.xlsx")
-    logging.info("База годового объёма ремонта обновлена")
+    base_update(assets)
 
 
 def monthly_plan(parent):
@@ -173,6 +171,11 @@ def monthly_plan(parent):
             parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
             parent.tableWidget.setItem(str_index, 5, QTableWidgetItem("01-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
             parent.tableWidget.setItem(str_index, 6, QTableWidgetItem(str(month_daes[assets["Месяц ремонта"][i]]) + "-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
+            parent.tableWidget.setItem(str_index, 7, QTableWidgetItem(str(assets["Дата начала"][i])))
+            parent.tableWidget.setItem(str_index, 8, QTableWidgetItem(str(assets["Дата начала"][i])))
+            parent.tableWidget.setItem(str_index, 9, QTableWidgetItem(str(assets["Дата окончания"][i])))
+            parent.tableWidget.setItem(str_index, 10, QTableWidgetItem(str(assets["Дата принятия"][i])))
+
 
 
 def release_zvr(parent):
@@ -186,10 +189,57 @@ def release_zvr(parent):
             assets["Статус ЗВР"][i] = "Выпущено"
             parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
             parent.tableWidget.setItem(str_index, 7, QTableWidgetItem(str(assets["Дата начала"][i])))
+            parent.tableWidget.setItem(str_index, 8, QTableWidgetItem(str(assets["Дата начала"][i])))
             str_index += 1
             logging.info("ЗВР "+str(assets["Номер ЗВР"][i])+" изменил статус на "+ str(assets["Статус ЗВР"][i]))
-    assets.to_excel("Database/assets.xlsx")
-    logging.info("База годового объёма ремонта обновлена")
+    base_update(assets)
+
+
+def database_read(parent):
+    str_index = 0
+    month_daes = {"Январь": 31, "Февраль": 28, "Март": 31, "Апрель": 30,
+                  "Май": 31, "Июнь": 30, "Июль": 31, "Август": 31,
+                  "Сентябрь": 30, "Октябрь": 31, "Ноябрь": 30, "Декабрь": 31}
+    month_nom = {"Январь": "01", "Февраль": "02", "Март": "03", "Апрель": "04",
+                 "Май": "05", "Июнь": "06", "Июль": "07", "Август": "08",
+                 "Сентябрь": "09", "Октябрь": "10", "Ноябрь": "11", "Декабрь": "12"}
+    logging.info("Синхронизируюсь с базой")
+    assets = pd.read_excel('Database/assets.xlsx')
+    for i in range((assets.shape[0])):
+        if str(assets["Дата окончания"][i])!="NaT" and str(assets["Дата принятия"][i])=="NaT":
+            parent.tableWidget.insertRow(str_index)
+            parent.tableWidget.setItem(str_index, 0, QTableWidgetItem(assets["Номер ЗВР"][i]))
+            parent.tableWidget.setItem(str_index, 1, QTableWidgetItem(assets["Номер родительского актива"][i]))
+            parent.tableWidget.setItem(str_index, 2, QTableWidgetItem(assets["Номер актива"][i]))
+            parent.tableWidget.setItem(str_index, 3, QTableWidgetItem(assets["Операция с активом"][i]))
+            parent.tableWidget.setItem(str_index, 4, QTableWidgetItem(assets["Статус ЗВР"][i]))
+            parent.tableWidget.setItem(str_index, 5,
+                                       QTableWidgetItem("01-" + str(month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
+            parent.tableWidget.setItem(str_index, 6, QTableWidgetItem(
+                str(month_daes[assets["Месяц ремонта"][i]]) + "-" + str(
+                    month_nom[assets["Месяц ремонта"][i]]) + "-2023"))
+            parent.tableWidget.setItem(str_index, 7, QTableWidgetItem(str(assets["Дата начала"][i])))
+            parent.tableWidget.setItem(str_index, 8, QTableWidgetItem(str(assets["Дата начала"][i])))
+            parent.tableWidget.setItem(str_index, 9, QTableWidgetItem(str(assets["Дата окончания"][i])))
+            parent.tableWidget.setItem(str_index, 10, QTableWidgetItem(str(assets["Дата принятия"][i])))
+
+def closed_ZVR(parent):
+    logging.info("Синхронизируюсь с базой")
+    assets = pd.read_excel('Database/assets.xlsx')
+    for i in range(parent.tableWidget.rowCount()):
+        try:
+            index = assets[assets["Номер актива"] == parent.tableWidget.item(i, 2).text()].index[0]
+        except:
+            continue
+        if parent.tableWidget.item(i, 10).text() == "ДА" or parent.tableWidget.item(i,10).text() == "Да" or parent.tableWidget.item(i, 10).text() == "дА" or parent.tableWidget.item(i, 10).text() == "да":
+            assets["Статус ЗВР"][index]="Завершено"
+            assets["Дата принятия"][index]=date.today()
+        elif parent.tableWidget.item(i, 10).text() == "НЕТ" or parent.tableWidget.item(i,10).text() == "Нет" or parent.tableWidget.item(i, 10).text() == "нет":
+            assets["Дата окончания"][index]=np.nan
+        else:
+            logging.error("У актива " + str(parent.tableWidget.item(i, 2).text()) + " не принято решение о завершении")
+    base_update(assets)
+
 
 
 
@@ -312,11 +362,26 @@ def filereader(fail_name):
         filetext[sting[i][0]]=(sting[i][1])
     return (filetext)
 
-def configupdate(zvr):
-    lines = ["zvrnomber;" + str(zvr) + "\n"]
+def configupdate(zvr=None, update_time=None):
+    if zvr==None:
+        config = filereader("config.config")
+        zvr=int(config['zvrnomber'])
+    if update_time==None:
+        config = filereader("config.config")
+        update_time = config['update_time']
+    lines = ["zvrnomber;" + str(zvr) + "\n"+"update_time;" + str(update_time) + "\n" ]
     with open("config.config", "w") as file:
         for line in lines:
             if line != "":
                 file.write(line)
+
+def base_update(base):
+    try:
+        base.to_excel("Database/assets.xlsx")
+    except:
+        logging.error("Открыт файл базы данных")
+    update=time.ctime(os.path.getmtime("Database/assets.xlsx"))
+    configupdate(update_time=update)
+    logging.info("Создана база годового объёма ремонта")
 
 
