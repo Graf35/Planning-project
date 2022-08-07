@@ -2,6 +2,8 @@ import time
 import logging
 import os
 import shutil
+from docx import Document
+from docx.shared import Cm
 
 def filereader(fail_name):
     sting=[]
@@ -39,6 +41,11 @@ def base_update(base):
     update = time.ctime(os.path.getmtime("Database/assets.xlsx"))
     configupdate(update_time=update)
     logging.info("Создана база годового объёма ремонта")
+
+def signature(fname, temp_dir):
+    document = Document(fname)
+    document.add_picture(temp_dir+'/template/shtamp.jpg', width=Cm(18.0), height=Cm(5))
+    document.save(fname)
 
 
 

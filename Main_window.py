@@ -139,7 +139,9 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
                 # Активируем файл
                 os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
                 Word.record(data_report)
-                Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+                Word.save(str(assets["Номер ЗВР"][i]) + ".docx", temp_dir)
+                if str(assets["Статус ЗВР"][i])=="Завершено":
+                    Script.signature(str(assets["Номер ЗВР"][i]) + ".docx")
                 os.chdir(temp_dir)
                 logging.info("Отчёт " + str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
                     assets["Номер ЗВР"][i]) + ".docx создан")
@@ -191,6 +193,8 @@ class MaimWindow(QtWidgets.QMainWindow, ui):
                     os.chdir(str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]))
                     Word.record(data_report)
                     Word.save(str(assets["Номер ЗВР"][i]) + ".docx")
+                    if str(assets["Статус ЗВР"][i]) == "Завершено":
+                        Script.signature(str(assets["Номер ЗВР"][i]) + ".docx", temp_dir)
                     os.chdir(temp_dir)
                     logging.info("Отчёт " + str(fname) + "/EAM121/" + str(assets["Месяц ремонта"][i]) + "/" + str(
                         assets["Номер ЗВР"][i]) + ".docx создан")
